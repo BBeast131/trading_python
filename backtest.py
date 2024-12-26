@@ -6,29 +6,24 @@ class OpeningRangeBreakout(backtrader.Strategy):
     params = dict(
         num_opening_bars=15
     )
-
     def __init__(self):
         self.opening_range_low = 0
         self.opening_range_high = 0
         self.opening_range = 0
         self.bought_today = False
-        self.order = None
-    
+        self.order = None    
     def log(self, txt, dt=None):
         if dt is None:
             dt = self.datas[0].datetime.datetime()
 
         print('%s, %s' % (dt, txt))
-
     def notify_order(self, order):
         if order.status in [order.Submitted, order.Accepted]:
             # Buy/Sell order submitted/accepted to/by broker - Nothing to do
             return
-
         # Check if an order has been completed
         if order.status in [order.Completed]:
             order_details = f"{order.executed.price}, Cost: {order.executed.value}, Comm {order.executed.comm}"
-
             if order.isbuy():
                 self.log(f"BUY EXECUTED, Price: {order_details}")
             else:  # Sell
