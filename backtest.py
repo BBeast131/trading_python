@@ -15,7 +15,6 @@ class OpeningRangeBreakout(backtrader.Strategy):
     def log(self, txt, dt=None):
         if dt is None:
             dt = self.datas[0].datetime.datetime()
-
         print('%s, %s' % (dt, txt))
     def notify_order(self, order):
         if order.status in [order.Submitted, order.Accepted]:
@@ -27,9 +26,8 @@ class OpeningRangeBreakout(backtrader.Strategy):
             if order.isbuy():
                 self.log(f"BUY EXECUTED, Price: {order_details}")
             else:  # Sell
-                self.log(f"SELL EXECUTED, Price: {order_details}")
-        
-        elif order.status in [order.Canceled, order.Margin, order.Rejected]:
+                self.log(f"SELL EXECUTED, Price: {order_details}")    
+    elif order.status in [order.Canceled, order.Margin, order.Rejected]:
             self.log('Order Canceled/Margin/Rejected')
 
         self.order = None
@@ -113,3 +111,4 @@ if __name__ == '__main__':
 
         cerebro.run()
         #cerebro.plot()
+        # //cerebro.run()
